@@ -2,8 +2,15 @@
 	docker-build docker-push \
 	docker-run kubernetes-run
 
-DOCKER_TAG_VERSION ?= latest
+DOCKER_TAG_VERSION ?= staging-latest
 DOCKER_TAG_C ?= pratikmahajan/twitter-stream-source:${DOCKER_TAG_VERSION}
+
+
+NAMESPACE ?= serverless-demo
+POD ?= staging-bot-api
+PROD_POD ?= prod-bot-api
+
+
 
 # Build and Push to docker hub
 docker: docker-build docker-push
@@ -20,3 +27,13 @@ docker-push:
 docker-run:
 	docker run -it --rm --net host ${DOCKER_TAG_C} /bin/sh
 
+#Staging the app
+staging: docker staging-rollout
+
+# Deploy code to Production:
+production:
+	./deploy/deploy.sh -n ${NAMESPACE} -p ${PROD_POD} -t prod
+
+#deploy code to staging:
+staging-rollout:
+	./deploy/deploy.sh -n ${NAMESPACE} -p ${POD} -t staging

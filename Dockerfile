@@ -11,6 +11,7 @@ WORKDIR /home/app
 
 COPY . .
 
-RUN go build -o GO-Serverless .
+RUN go build -o twitter-serverless-events .
 
-CMD /home/app/GO-Serverless
+CMD /home/app/twitter-serverless-events
+
