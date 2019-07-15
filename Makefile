@@ -18,5 +18,5 @@ docker-push:
 
 # Runs the docker image on local machine
 docker-run:
-	docker run -it --rm --net host ${DOCKER_TAG_C} /bin/bash
+	docker run -it --rm --net host ${DOCKER_TAG_C} /bin/sh
 
