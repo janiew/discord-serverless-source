@@ -3,17 +3,17 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 
+	"github.com/PratikMahajan/Twitter-Knative-Serverless-App/config"
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
 )
 
 var (
-	consumerKey    = mustGetEnvVar("T_CONSUMER_KEY", "")
-	consumerSecret = mustGetEnvVar("T_CONSUMER_SECRET", "")
-	accessToken    = mustGetEnvVar("T_ACCESS_TOKEN", "")
-	accessSecret   = mustGetEnvVar("T_ACCESS_SECRET", "")
+	consumerKey    = config.MustGetEnvVar("T_CONSUMER_KEY", "")
+	consumerSecret = config.MustGetEnvVar("T_CONSUMER_SECRET", "")
+	accessToken    = config.MustGetEnvVar("T_ACCESS_TOKEN", "")
+	accessSecret   = config.MustGetEnvVar("T_ACCESS_SECRET", "")
 )
 
 func search(ctx context.Context, query, sink string, stop <-chan struct{}) {
@@ -52,16 +52,4 @@ func search(ctx context.Context, query, sink string, stop <-chan struct{}) {
 	log.Printf("Starting tweet streamming for: %s\n", query)
 	go demux.HandleChan(stream.Messages)
 
-}
-
-func mustGetEnvVar(key, fallbackValue string) string {
-	if val, ok := os.LookupEnv(key); ok {
-		return val
-	}
-
-	if fallbackValue == "" {
-		panic("Required env var not set: " + key)
-	}
-
-	return fallbackValue
 }

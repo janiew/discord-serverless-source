@@ -6,6 +6,7 @@ import (
 	"flag"
 	"log"
 
+	"github.com/PratikMahajan/Twitter-Knative-Serverless-App/config"
 	"github.com/knative/pkg/signals"
 )
 
@@ -16,7 +17,7 @@ var (
 
 func init() {
 	flag.StringVar(&sink, "sink", "", "where to sink events to")
-	flag.StringVar(&query, "query", "", "twitter query/search string")
+	query = config.MustGetEnvVar("QUERY", "")
 }
 
 func main() {
