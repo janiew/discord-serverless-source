@@ -1,11 +1,12 @@
 FROM golang:1.12-alpine
 
 RUN apk add git
-RUN adduser -D app
-
 RUN apk --update add ca-certificates
 
-USER app
+RUN adduser -D app
+
+
+RUN su - app
 WORKDIR /home/app
 
 COPY . .
