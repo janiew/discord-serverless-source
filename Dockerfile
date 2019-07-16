@@ -13,5 +13,5 @@ COPY . .
 
 RUN go build -o twitter-serverless-events .
 
-CMD /home/app/twitter-serverless-events
+ENTRYPOINT ["/home/app/twitter-serverless-events"]
 

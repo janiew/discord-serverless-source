@@ -46,6 +46,9 @@ function header_text {
 echo "Using namespace/Project $namespace"
 oc project $namespace
 
+echo "Setting Label for $namespace"
+oc label namespace $namespace knative-eventing-injection=enabled --overwrite
+
 if [ "$type" == "prod" ]; then
     header_text "Starting Production deployment on OpenShift!"
     for filename in deploy/templates/*.yaml; do

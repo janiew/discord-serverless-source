@@ -6,7 +6,7 @@ DOCKER_TAG_VERSION ?= staging-latest
 DOCKER_TAG_C ?= pratikmahajan/twitter-stream-source:${DOCKER_TAG_VERSION}
 
 
-NAMESPACE ?= serverless-demo
+NAMESPACE ?= svrless
 POD ?= staging-bot-api
 PROD_POD ?= prod-bot-api
 

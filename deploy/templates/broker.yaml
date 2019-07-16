@@ -2,3 +2,15 @@ apiVersion: eventing.knative.dev/v1alpha1
 kind: Broker
 metadata:
   name: default
+
+---
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Trigger
+metadata:
+  name: knative-service-default-broker
+spec:
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1alpha1
+      kind: Service
+      name: tweetviewer
