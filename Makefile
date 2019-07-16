@@ -1,14 +1,14 @@
 .PHONY: docker \
 	docker-build docker-push \
-	docker-run kubernetes-run
+	docker-run
 
 DOCKER_TAG_VERSION ?= staging-latest
 DOCKER_TAG_C ?= pratikmahajan/twitter-stream-source:${DOCKER_TAG_VERSION}
 
 
-NAMESPACE ?= svrless
-POD ?= staging-bot-api
-PROD_POD ?= prod-bot-api
+NAMESPACE ?= k-app
+POD ?= staging-twitter-source
+PROD_POD ?= prod-twitter-source
 
 
 
@@ -37,3 +37,7 @@ production:
 #deploy code to staging:
 staging-rollout:
 	./deploy/deploy.sh -n ${NAMESPACE} -p ${POD} -t staging
+
+
+imagestream-tag:
+	oc tag docker.io/${DOCKER_TAG_C} ${POD}:${DOCKER_TAG_VERSION} --scheduled
