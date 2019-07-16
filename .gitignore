@@ -1,2 +1,5 @@
 *.log
 .idea
+secret*
+!secret.yaml.example
+Twitter-Knative-Serverless-App
