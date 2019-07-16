@@ -34,3 +34,8 @@ spec:
     apiVersion: eventing.knative.dev/v1alpha1
     kind: Broker
     name: default
+---
+apiVersion: eventing.knative.dev/v1alpha1
+kind: Broker
+metadata:
+  name: default
