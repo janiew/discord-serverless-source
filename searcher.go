@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"strings"
 
 	"github.com/PratikMahajan/Twitter-Knative-Serverless-App/config"
 	"github.com/dghubble/go-twitter/twitter"
@@ -10,10 +11,10 @@ import (
 )
 
 var (
-	consumerKey    = config.MustGetEnvVar("T_CONSUMER_KEY", "")
-	consumerSecret = config.MustGetEnvVar("T_CONSUMER_SECRET", "")
-	accessToken    = config.MustGetEnvVar("T_ACCESS_TOKEN", "")
-	accessSecret   = config.MustGetEnvVar("T_ACCESS_SECRET", "")
+	consumerKey    = strings.TrimSpace(config.MustGetEnvVar("T_CONSUMER_KEY", ""))
+	consumerSecret = strings.TrimSpace(config.MustGetEnvVar("T_CONSUMER_SECRET", ""))
+	accessToken    = strings.TrimSpace(config.MustGetEnvVar("T_ACCESS_TOKEN", ""))
+	accessSecret   = strings.TrimSpace(config.MustGetEnvVar("T_ACCESS_SECRET", ""))
 )
 
 func search(ctx context.Context, query, sink string, stop <-chan struct{}) {
