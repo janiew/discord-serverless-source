@@ -1,4 +1,4 @@
-module github.com/PratikMahajan/Twitter-Knative-Serverless-App
+module github.com/PratikMahajan/Twitter-Knative-Serverless-App-Source
 
 go 1.12
 
