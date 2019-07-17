@@ -6,7 +6,7 @@ DOCKER_TAG_VERSION ?= staging-latest
 DOCKER_TAG_C ?= pratikmahajan/twitter-stream-source:${DOCKER_TAG_VERSION}
 
 
-NAMESPACE ?= k-app
+NAMESPACE ?= dev2-app
 POD ?= staging-twitter-source
 PROD_POD ?= prod-twitter-source
 
@@ -25,7 +25,7 @@ docker-push:
 
 # Runs the docker image on local machine
 docker-run:
-	docker run -it --rm --net host ${DOCKER_TAG_C} /bin/sh
+	docker run -it --rm --net host --entrypoint /bin/sh ${DOCKER_TAG_C}
 
 #Staging the app
 staging: docker staging-rollout

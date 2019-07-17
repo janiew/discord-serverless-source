@@ -5,13 +5,11 @@ RUN apk --update add ca-certificates
 
 RUN adduser -D app
 
-
-RUN su - app
+USER app
 WORKDIR /home/app
 
-COPY . .
+COPY --chown=app:app . .
 
 RUN go build -o twitter-serverless-events .
 
 ENTRYPOINT ["/home/app/twitter-serverless-events"]
-
