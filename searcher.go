@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/PratikMahajan/Twitter-Knative-Serverless-App/config"
+	"github.com/PratikMahajan/Twitter-Knative-Serverless-App-Source/config"
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
 )
