@@ -6,7 +6,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/PratikMahajan/Twitter-Knative-Serverless-App/config"
+	"github.com/PratikMahajan/Twitter-Knative-Serverless-App-Source/config"
 	"github.com/knative/pkg/signals"
 )
 
