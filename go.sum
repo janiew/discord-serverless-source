@@ -1,3 +1,5 @@
+github.com/PratikMahajan/Twitter-Knative-Serverless-App v0.0.0-20190717150609-e99b5511be06 h1:PEfBNXXNAxlFz46YVyYTSGXBk5EAgahfePukJ+9Mvb4=
+github.com/PratikMahajan/Twitter-Knative-Serverless-App v0.0.0-20190717150609-e99b5511be06/go.mod h1:LJiM86juLXIVRNgvTPi+ccgNBJVcnDsRs5gCHPIwiuk=
 github.com/cenkalti/backoff v2.1.1+incompatible h1:tKJnvO2kl0zmb/jA5UKAt4VoEVw1qxKWjE/Bpp46npY=
 github.com/cenkalti/backoff v2.1.1+incompatible/go.mod h1:90ReRw6GdpyfrHakVjL/QHaoyV4aDUVVkXQJJJ3NXXM=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=

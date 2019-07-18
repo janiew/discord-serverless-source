@@ -20,9 +20,9 @@ var (
 func search(ctx context.Context, query, sink string, stop <-chan struct{}) {
 
 	// twitter client config
-	config := oauth1.NewConfig(consumerKey, consumerSecret)
+	cfg := oauth1.NewConfig(consumerKey, consumerSecret)
 	token := oauth1.NewToken(accessToken, accessSecret)
-	httpClient := config.Client(oauth1.NoContext, token)
+	httpClient := cfg.Client(oauth1.NoContext, token)
 	twClient := twitter.NewClient(httpClient)
 
 	sinker, err := newSinkPoster(sink)
