@@ -6,7 +6,7 @@ DOCKER_TAG_VERSION ?= staging-latest
 DOCKER_TAG_C ?= pratikmahajan/twitter-stream-source:${DOCKER_TAG_VERSION}
 
 
-NAMESPACE ?= dev2-app
+NAMESPACE ?= test-app
 POD ?= staging-twitter-source
 PROD_POD ?= prod-twitter-source
 
