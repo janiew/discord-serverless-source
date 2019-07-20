@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: twitter-serverless-events-config
 data:
-  QUERY: I0Rvd25sb2FkVGhpc1ZpZGVv
+  QUERY: Knative-Download-Video
