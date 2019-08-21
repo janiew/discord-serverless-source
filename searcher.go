@@ -5,52 +5,75 @@ import (
 	"log"
 	"strings"
 
-	"github.com/PratikMahajan/Twitter-Knative-Serverless-App-Source/config"
-	"github.com/dghubble/go-twitter/twitter"
-	"github.com/dghubble/oauth1"
+	"github.com/janiew/discord-serverless-source/config"
+	"github.com/bwmarrin/discordgo"
+	
 )
 
 var (
-	consumerKey    = strings.TrimSpace(config.MustGetEnvVar("T_CONSUMER_KEY", ""))
-	consumerSecret = strings.TrimSpace(config.MustGetEnvVar("T_CONSUMER_SECRET", ""))
-	accessToken    = strings.TrimSpace(config.MustGetEnvVar("T_ACCESS_TOKEN", ""))
-	accessSecret   = strings.TrimSpace(config.MustGetEnvVar("T_ACCESS_SECRET", ""))
+	accessToken    = strings.TrimSpace(config.MustGetEnvVar("D_ACCESS_TOKEN", ""))
+	webhookName = config.MustGetEnvVar("WEBHOOK_NAME", "")
 )
+
+var w map[string]*discordgo.Webhook
 
 func search(ctx context.Context, query, sink string, stop <-chan struct{}) {
 
-	// twitter client config
-	cfg := oauth1.NewConfig(consumerKey, consumerSecret)
-	token := oauth1.NewToken(accessToken, accessSecret)
-	httpClient := cfg.Client(oauth1.NoContext, token)
-	twClient := twitter.NewClient(httpClient)
+	// discord client config
+	dg, err := discordgo.New("Bot " + accessToken)
 
 	sinker, err := newSinkPoster(sink)
 	if err != nil {
 		log.Fatalf("Error getting sinker: %v", err)
 	}
 
-	demux := twitter.NewSwitchDemux()
-	demux.Tweet = func(t *twitter.Tweet) {
-		log.Printf("Got tweet: %s\n", t.IDStr)
-		if err := sinker.post(ctx, t); err != nil {
-			log.Printf("Error on tweet handle: %v\n", err)
+	w = make(map[string]*discordgo.Webhook)
+
+	dg.AddHandler(func(s *discordgo.Session, m *discordgo.MessageCreate) {
+
+		if m.Author.ID == s.State.User.ID {
+			return
 		}
-	}
+	
+		if m.Content == query {
+			var web = w[m.ChannelID]
+			var found = web != nil
+			if !found {
+				var cwebs,err = dg.ChannelWebhooks(m.ChannelID)
+				if err != nil {
+					log.Printf("Error getting channel webhooks: %v", err)
+					return
+				}
+				for _, v := range cwebs {
+					if v.Name == webhookName {
+						w[m.ChannelID] = v
+						web = v
+						found = true
+					}
+				}
+				if !found {
+					web,err = dg.WebhookCreate(m.ChannelID,webhookName,"")
+					if err != nil {
+						log.Printf("Error getting webhook: %v", err)
+						return
+					}
 
-	params := &twitter.StreamFilterParams{
-		Track:         []string{query},
-		StallWarnings: twitter.Bool(true),
-		Language:      []string{"en"},
-	}
+					w[m.ChannelID] = web
+				}
+			}
 
-	stream, err := twClient.Streams.Filter(params)
+			sinker.post(ctx,s,m,web)
+		}
+	})
+
+	err = dg.Open()
 	if err != nil {
-		log.Fatalf("Error while creating filter: %v\n", err)
-		return
+		log.Fatalf("Error opening connection to discord: %v\n", err)
 	}
 
-	log.Printf("Starting tweet streamming for: %s\n", query)
-	go demux.HandleChan(stream.Messages)
+	log.Printf("Starting discord stream for: %s\n", query)
+	dg.Close()
 
 }
+
+

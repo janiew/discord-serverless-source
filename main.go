@@ -6,8 +6,9 @@ import (
 	"flag"
 	"log"
 
-	"github.com/PratikMahajan/Twitter-Knative-Serverless-App-Source/config"
+	"github.com/janiew/discord-serverless-source/config"
 	"github.com/knative/pkg/signals"
+	
 )
 
 var (

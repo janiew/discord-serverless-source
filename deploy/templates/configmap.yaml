@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: twitter-serverless-events-config
+  name: discord-serverless-source-config
 data:
-  QUERY: Knative-Download-Video
+  QUERY: ping
+  WEBHOOK_NAME: discord-serverless-webhook

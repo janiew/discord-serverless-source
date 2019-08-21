@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/dghubble/go-twitter/twitter"
+	"github.com/bwmarrin/discordgo"
 	ce "github.com/knative/pkg/cloudevents"
 )
 
@@ -13,13 +13,13 @@ func newSinkPoster(sink string) (sinker *sinkPoster, err error) {
 
 	// cloud events
 	ceClient := ce.NewClient(sink, ce.Builder{
-		EventType: "com.twitter",
-		Source:    "https://api.twitter.com/1.1/search/tweets.json",
 	})
 
 	s := &sinkPoster{
 		client: ceClient,
 	}
+
+
 
 	return s, nil
 
@@ -29,18 +29,27 @@ type sinkPoster struct {
 	client *ce.Client
 }
 
-func (s *sinkPoster) post(ctx context.Context, t *twitter.Tweet) error {
+type MessageEvent struct {
+	Message *discordgo.MessageCreate `json:"message"`
+	Webhook *discordgo.Webhook `json:"webhook"`
+}
 
-	log.Printf("Posting tweet: %s\n", t.IDStr)
-	eventTime, err := time.Parse(time.RubyDate, t.CreatedAt)
+func (s *sinkPoster) post(ctx context.Context, sesh *discordgo.Session, m *discordgo.MessageCreate, webhook *discordgo.Webhook) error {
 
+	log.Printf("Posting message: %s\n", m.ID)
+	eventTime, err := m.Timestamp.Parse()
 	if err != nil {
 		log.Printf("Error while parsing created at: %v", err)
 		eventTime = time.Now()
 	}
 
-	return s.client.Send(t, ce.V01EventContext{
-		EventID:   t.IDStr,
+	data := MessageEvent{
+		Message : m,
+		Webhook : webhook,
+	}
+
+	return s.client.Send(data, ce.V01EventContext{
+		EventID:   m.ID,
 		EventTime: eventTime,
 	})
 
