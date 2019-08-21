@@ -3,7 +3,7 @@
 	docker-run
 
 DOCKER_TAG_VERSION ?= staging-latest
-DOCKER_TAG_C ?= pratikmahajan/twitter-stream-source:${DOCKER_TAG_VERSION}
+DOCKER_TAG_C ?= janiew/discord-serverless-source:${DOCKER_TAG_VERSION}
 
 
 NAMESPACE ?= test-app

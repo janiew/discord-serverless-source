@@ -29,7 +29,7 @@ spec:
         secretKeyRef:
           key: T_ACCESS_SECRET
           name: twitter-serverless-events-secret
-  image: pratikmahajan/twitter-stream-source:prod-latest
+  image: janiew/discord-serverless-source:prod-latest
   sink:
     apiVersion: eventing.knative.dev/v1alpha1
     kind: Broker
