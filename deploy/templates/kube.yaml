@@ -9,25 +9,15 @@ spec:
         configMapKeyRef:
           key: QUERY
           name: twitter-serverless-events-config
-    - name: T_CONSUMER_KEY
+    - name: WEBHOOK_NAME
+      valueFrom:
+        configMapKeyRef:
+          key: WEBHOOK_NAME
+          name: twitter-serverless-events-config
+    - name: D_ACCESS_TOKEN
       valueFrom:
         secretKeyRef:
-          key: T_CONSUMER_KEY
-          name: twitter-serverless-events-secret
-    - name: T_CONSUMER_SECRET
-      valueFrom:
-        secretKeyRef:
-          key: T_CONSUMER_SECRET
-          name: twitter-serverless-events-secret
-    - name: T_ACCESS_TOKEN
-      valueFrom:
-        secretKeyRef:
-          key: T_ACCESS_TOKEN
-          name: twitter-serverless-events-secret
-    - name: T_ACCESS_SECRET
-      valueFrom:
-        secretKeyRef:
-          key: T_ACCESS_SECRET
+          key: D_ACCESS_TOKEN
           name: twitter-serverless-events-secret
   image: janiew/discord-serverless-source:prod-latest
   sink:
